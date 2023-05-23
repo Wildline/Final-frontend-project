@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { 
   fetchInstructorThunk,
-  fetchAllCoursesThunk,
-  editCourseThunk 
+  fetchAllTasksThunk,
+  editTaskThunk 
 } from "../../store/thunks";
 
 import { InstructorView } from "../views";
@@ -12,15 +12,15 @@ class InstructorContainer extends Component {
   componentDidMount() {
     //getting instructor ID from url
     this.props.fetchInstructor(this.props.match.params.id);
-    this.props.fetchCourses();
+    this.props.fetchTasks();
   }
 
   render() {
     return (
       <InstructorView 
         instructor={this.props.instructor}
-        editCourse={this.props.editCourse}
-        allCourses={this.props.allCourses}
+        editTask={this.props.editTask}
+        allTasks={this.props.allTasks}
       />
     );
   }
@@ -30,7 +30,7 @@ class InstructorContainer extends Component {
 const mapState = (state) => {
   return {
     instructor: state.instructor,
-    allCourses: state.allCourses,
+    allTasks: state.allTasks,
 
   };
 };
@@ -39,8 +39,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchInstructor: (id) => dispatch(fetchInstructorThunk(id)),
-    editCourse: (course) => dispatch(editCourseThunk(course)),
-    fetchCourses: () => dispatch(fetchAllCoursesThunk()),
+    editTask: (task) => dispatch(editTaskThunk(task)),
+    fetchTasks: () => dispatch(fetchAllTasksThunk()),
 
   };
 };
