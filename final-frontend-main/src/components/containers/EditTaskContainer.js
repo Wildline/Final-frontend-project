@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
 
-import { fetchTaskThunk, editTaskThunk, fetchAllInstructorsThunk  } from '../../store/thunks';
+import { fetchTaskThunk, editTaskThunk, fetchAllEmployeesThunk  } from '../../store/thunks';
 
 
 /*
@@ -54,7 +54,7 @@ class EditTaskContainer extends Component {
     componentDidMount() {
         //getting course ID from url
         this.props.fetchTask(this.props.match.params.id);
-        this.props.fetchInstructors();
+        this.props.fetchEmployees();
         this.setState({
             title: this.props.task.title, 
             timeslot: this.props.task.timeslot,
@@ -112,10 +112,10 @@ class EditTaskContainer extends Component {
     }
 
     render() {
-        let { task, allInstructors, editTask, fetchTask} = this.props;
+        let { task, allEmployees, editTask, fetchTask} = this.props;
         let assignedInstructor = task.instructorId;
 
-        let otherInstructors = allInstructors.filter(instructor => instructor.id!==assignedInstructor);
+        let otherEmployees = allEmployees.filter(instructor => instructor.id!==assignedInstructor);
       
         //go to single course view of the edited course
         if(this.state.redirect) {
@@ -138,7 +138,7 @@ class EditTaskContainer extends Component {
                 <option value={task.instructorId}>{task.instructor.firstname+" (current)"}</option>
               : <option value="staff">Staff</option>
               }
-              {otherInstructors.map(instructor => {
+              {otherEmployees.map(instructor => {
                 return (
                   <option value={instructor.id} key={instructor.id}>{instructor.firstname}</option>
                 )
@@ -161,8 +161,8 @@ class EditTaskContainer extends Component {
             : <div> No instructor currently assigned </div>
           }
 
-          <div> Other instructors
-          {otherInstructors.map(instructor => {
+          <div> Other employees
+          {otherEmployees.map(instructor => {
             return (
             <div key={instructor.id}>
                 <Link to={`/instructor/${instructor.id}`}>
@@ -182,7 +182,7 @@ class EditTaskContainer extends Component {
 const mapState = (state) => {
     return {
       task: state.task,
-      allInstructors: state.allInstructors
+      allEmployees: state.allEmployees
     };
   };
 
@@ -190,7 +190,7 @@ const mapDispatch = (dispatch) => {
     return({
         editTask: (task) => dispatch(editTaskThunk(task)),
         fetchTask: (id) => dispatch(fetchTaskThunk(id)),
-        fetchInstructors: () => dispatch(fetchAllInstructorsThunk()),
+        fetchEmployees: () => dispatch(fetchAllEmployeesThunk()),
 
     })
 }

@@ -7,17 +7,17 @@ let path = "http://localhost:5001/api";
 // THUNKS
 
 //All instructors
-export const fetchAllInstructorsThunk = () => async (dispatch) => {
+export const fetchAllEmployeesThunk = () => async (dispatch) => {
   try {
-    let res = await axios.get(`${path}/instructors`);
-    dispatch(ac.fetchAllInstructors(res.data));
+    let res = await axios.get(`${path}/employees`);
+    dispatch(ac.fetchAllEmployees(res.data));
   } catch(err) {
     console.error(err);
   }
 };
 
 //Single instructor
-export const fetchInstructorThunk = (id) => async (dispatch) => {
+export const fetchEmployeeThunk = (id) => async (dispatch) => {
   // thunk creator would not an be async function 
   // if using Promise.then:
   // return axios
@@ -26,8 +26,8 @@ export const fetchInstructorThunk = (id) => async (dispatch) => {
   //   .then((instructor) => dispatch(ac.fetchInstructor(instructor)))
   //   .catch((err) => console.log(err));
   try {
-    let res = await axios.get(`${path}/instructors/${id}`);
-    dispatch(ac.fetchInstructor(res.data));
+    let res = await axios.get(`${path}/employees/${id}`);
+    dispatch(ac.fetchEmployee(res.data));
   } catch(err) {
     console.error(err);
   }
